@@ -2,7 +2,7 @@
 <h2 align="center">(Sistem Pencarian Kost Online)</h2>
 
 <p align="center">
-  <img src="/logoUnsulbar.jpg" width="300" alt="Logo Unsulbar">
+  <img src="/unsulbar_logo2_copy.jpg" width="300" alt="Logo Unsulbar">
 </p>
 
 <p align="center"><strong>Ria Ramadani</strong></p>
