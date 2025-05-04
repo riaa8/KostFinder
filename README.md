@@ -1,4 +1,3 @@
-Berikut adalah struktur penulisan README untuk proyek Viscode yang mengikuti file yang telah Anda unggah:
 
 ---
 
