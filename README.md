@@ -1,30 +1,13 @@
-Berikut adalah revisi struktur penulisan README Anda tanpa menggunakan HTML, hanya menambahkan tempat untuk gambar/logo:
+<h1 align="center">KostFinder (Sistem Pencarian Kost Online)</h1>
 
----
+<p align="center">
+  <img src="public/logo-unsulbar.jpg" width="300" alt="Logo Unsulbar">
+</p>
 
-# KostFinder
-
-**(Sistem Pencarian Kost Online)**
-
----
-
-
-
-<img src="public/logo unsulbar.png" alt="Logo KostFinder">
-
-
-
----
-
-**Ria Ramadani**
-**D0223014**
-
----
-
-### **Framework Web Based**
-**2025**
-
----
+<p align="center"><strong>Ria Ramadani</strong></p>
+<p align="center">D0223014</p>
+<p align="center"><strong>Framework Web Based</strong></p>
+<p align="center">2025</p>
 
 
 ## **Role dan Fitur-fitur**
