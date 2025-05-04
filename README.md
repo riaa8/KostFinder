@@ -1,7 +1,7 @@
 <h1 align="center">KostFinder (Sistem Pencarian Kost Online)</h1>
 
 <p align="center">
-  <img src="public/logo-unsulbar.jpg" width="300" alt="Logo Unsulbar">
+  <img src="public/logo unsulbar.jpg" width="300" alt="Logo Unsulbar">
 </p>
 
 <p align="center"><strong>Ria Ramadani</strong></p>
