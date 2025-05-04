@@ -10,7 +10,7 @@ Berikut adalah revisi struktur penulisan README Anda tanpa menggunakan HTML, han
 
 
 
-![Logo KostFinder](path/to/logo unsulbar.png)
+<img src="path/to/logo unsulbar.png" alt="Logo KostFinder">
 
 
 
