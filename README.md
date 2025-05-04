@@ -1,3 +1,4 @@
+Berikut adalah revisi struktur penulisan README Anda tanpa menggunakan HTML, hanya menambahkan tempat untuk gambar/logo:
 
 ---
 
@@ -7,19 +8,24 @@
 
 ---
 
-### **Dibuat Oleh**
+
+
+![Logo KostFinder](path/to/logo unsulbar.png)
+
+
+
+---
 
 **Ria Ramadani**
-D0223014
+**D0223014**
 
 ---
 
-### **Framework**
-
-**Web Based**
-Tahun: **2025**
+### **Framework Web Based**
+**2025**
 
 ---
+
 
 ## **Role dan Fitur-fitur**
 
@@ -122,4 +128,4 @@ Tahun: **2025**
   * Satu user bisa melaporkan banyak kost
   * Satu kost bisa dilaporkan oleh banyak user
 
-
+---
