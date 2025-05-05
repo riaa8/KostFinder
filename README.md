@@ -41,10 +41,10 @@
 | Nama Field | Tipe Data    | Keterangan                    |
 | ---------- | ------------ | ----------------------------- |
 | Id         | BIGINT       | Primary key (Auto Increment)  |
-| Name       | VARCHAR(255) | Nama pengguna                 |
-| Email      | VARCHAR(255) | Email pengguna (unique)       |
-| Password   | VARCHAR(255) | Password terenkripsi          |
-| No\_phone  | VARCHAR(20)  | Nomor HP pengguna             |
+| Name       | STRING       | Nama pengguna                 |
+| Email      | STRING       | Email pengguna (unique)       |
+| Password   | STRING       | Password terenkripsi          |
+| No\_phone  | STRING       | Nomor HP pengguna             |
 | Role       | ENUM         | 'admin', 'pemilik', 'pencari' |
 
 ### **Tabel Kosts**
@@ -52,10 +52,10 @@
 | Nama Field | Tipe Data    | Keterangan                 |
 | ---------- | ------------ | -------------------------- |
 | Id         | BIGINT       | Primary key                |
-| Name       | VARCHAR(255) | Nama kost                  |
-| Alamat     | VARCHAR(200) | Alamat kost                |
+| Name       | STRING       | Nama kost                  |
+| Alamat     | STRING       | Alamat kost                |
 | Harga      | INTEGER      | Harga per bulan            |
-| Fasilitas  | VARCHAR(300) | Fasilitas                  |
+| Fasilitas  | STRING       | Fasilitas                  |
 | Owner\_id  | BIGINT       | Foreign key ke tabel users |
 
 ### **Tabel Favorites**
@@ -74,7 +74,7 @@
 | User\_id   | BIGINT       | Foreign key ke tabel users |
 | Kost\_id   | BIGINT       | Foreign key ke tabel kost  |
 | Rating     | INTEGER      | Nilai rating               |
-| Comment    | VARCHAR(200) | Isi komentar               |
+| Comment    | STRING       | Isi komentar               |
 
 ### **Tabel Report**
 
@@ -83,7 +83,7 @@
 | Id           | BIGINT        | Primary key                |
 | User\_id     | BIGINT        | Foreign key ke tabel users |
 | Kost\_id     | BIGINT        | Foreign key ke tabel kost  |
-| Report\_text | VARCHAR(300)  | Alasan laporan             |
+| Report\_text | STRING        | Alasan laporan             |
 
 ---
 
