@@ -95,19 +95,19 @@
   One to Many (1 pemilik bisa punya banyak kost)
 
 * **Users – Favorites – Kosts**
-  Many to Many (via tabel Favorites)
+  Many to Many 
 
   * Satu user bisa menambahkan banyak kost ke favoritnya
   * Satu kost bisa difavoritkan oleh banyak user
 
 * **Users – Reviews – Kosts**
-  Many to Many (via tabel Reviews)
+  Many to Many 
 
   * Satu user bisa memberikan review ke banyak kost
   * Satu kost bisa memiliki review dari banyak user
 
 * **Users – Reports – Kosts**
-  Many to Many (via tabel Reports)
+  Many to Many 
 
   * Satu user bisa melaporkan banyak kost
   * Satu kost bisa dilaporkan oleh banyak user
