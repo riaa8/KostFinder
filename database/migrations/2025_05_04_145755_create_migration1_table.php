@@ -20,9 +20,9 @@ return new class extends Migration
         Schema::create('user', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('password');
-            $table->string('no_phone')->nullable();
+            $table->string('no_phone');
             $table->enum('role', ['admin', 'pemilik', 'pencari']);
             $table->timestamps();
         });
@@ -32,9 +32,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('owner_id')->constrained('user')->onDelete('cascade');
             $table->string('name');
-            $table->text('alamat');
+            $table->string('alamat');
             $table->integer('harga');
-            $table->text('fasilitas')->nullable();
+            $table->string('fasilitas');
             $table->enum('gender', ['putra', 'putri', 'campuran']);
             $table->enum('status', ['aktif', 'nonaktif', 'pending'])->default('pending');
             $table->timestamps();
@@ -54,7 +54,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
             $table->foreignId('kost_id')->constrained('kosts')->onDelete('cascade');
             $table->unsignedTinyInteger('rating'); // 1-5
-            $table->text('comment')->nullable();
+            $table->string('comment');
             $table->timestamps();
         });
 
@@ -63,7 +63,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
             $table->foreignId('kost_id')->constrained('kosts')->onDelete('cascade');
-            $table->text('report_text');
+            $table->stirng('report_text');
             $table->enum('status', ['pending', 'diproses', 'selesai'])->default('pending');
             $table->timestamps();
         });

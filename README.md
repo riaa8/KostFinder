@@ -53,9 +53,9 @@
 | ---------- | ------------ | -------------------------- |
 | Id         | BIGINT       | Primary key                |
 | Name       | VARCHAR(255) | Nama kost                  |
-| Alamat     | TEXT         | Alamat kost                |
+| Alamat     | VARCHAR(200) | Alamat kost                |
 | Harga      | INTEGER      | Harga per bulan            |
-| Fasilitas  | TEXT         | Fasilitas                  |
+| Fasilitas  | VARCHAR(300) | Fasilitas                  |
 | Owner\_id  | BIGINT       | Foreign key ke tabel users |
 
 ### **Tabel Favorites**
@@ -68,22 +68,22 @@
 
 ### **Tabel Reviews**
 
-| Nama Field | Tipe Data | Keterangan                 |
-| ---------- | --------- | -------------------------- |
-| Id         | BIGINT    | Primary key                |
-| User\_id   | BIGINT    | Foreign key ke tabel users |
-| Kost\_id   | BIGINT    | Foreign key ke tabel kost  |
-| Rating     | INTEGER   | Nilai rating               |
-| Comment    | TEXT      | Isi komentar               |
+| Nama Field | Tipe Data    | Keterangan                 |
+| ---------- | ------------ | -------------------------- |
+| Id         | BIGINT       | Primary key                |
+| User\_id   | BIGINT       | Foreign key ke tabel users |
+| Kost\_id   | BIGINT       | Foreign key ke tabel kost  |
+| Rating     | INTEGER      | Nilai rating               |
+| Comment    | VARCHAR(200) | Isi komentar               |
 
 ### **Tabel Report**
 
-| Nama Field   | Tipe Data | Keterangan                 |
-| ------------ | --------- | -------------------------- |
-| Id           | BIGINT    | Primary key                |
-| User\_id     | BIGINT    | Foreign key ke tabel users |
-| Kost\_id     | BIGINT    | Foreign key ke tabel kost  |
-| Report\_text | TEXT      | Alasan laporan             |
+| Nama Field   | Tipe Data     | Keterangan                 |
+| ------------ | ------------- | -------------------------- |
+| Id           | BIGINT        | Primary key                |
+| User\_id     | BIGINT        | Foreign key ke tabel users |
+| Kost\_id     | BIGINT        | Foreign key ke tabel kost  |
+| Report\_text | VARCHAR(300)  | Alasan laporan             |
 
 ---
 
