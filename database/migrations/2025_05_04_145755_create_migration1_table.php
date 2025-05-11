@@ -46,7 +46,10 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        
+        // Tambahan constraint main_review_id setelah tabel review tersedia
+        Schema::table('kosts', function (Blueprint $table) {
+            $table->foreign('main_review_id')->references('id')->on('reviews')->onDelete('set null');
+        });
 
         // Tabel favorites
         Schema::create('favorites', function (Blueprint $table) {
@@ -72,6 +75,9 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::table('kosts', function (Blueprint $table) {
+            $table->dropForeign(['main_review_id']);
+        });
         Schema::dropIfExists('reports');
         Schema::dropIfExists('favorites');
         Schema::dropIfExists('kosts');
