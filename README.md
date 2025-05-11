@@ -17,7 +17,7 @@
 
 * Menejemen User
 * Melihat Laporan
-* Menindaklanjuti review atau report
+* Menindak lanjuti review atau report
 
 ### **Pemilik Kost**
 
@@ -49,14 +49,16 @@
 
 ### **Tabel Kosts**
 
-| Nama Field | Tipe Data    | Keterangan                 |
-| ---------- | ------------ | -------------------------- |
-| Id         | BIGINT       | Primary key                |
-| Name       | STRING       | Nama kost                  |
-| Alamat     | STRING       | Alamat kost                |
-| Harga      | INTEGER      | Harga per bulan            |
-| Fasilitas  | STRING       | Fasilitas                  |
-| Owner\_id  | BIGINT       | Foreign key ke tabel users |
+| Nama Field        | Tipe Data    | Keterangan                               |
+| ----------------- | ------------ | ---------------------------------------- |
+| Id                | BIGINT       | Primary key                              |
+| Name              | STRING       | Nama kost                                |
+| Alamat            | STRING       | Alamat kost                              |
+| Harga             | INTEGER      | Harga per bulan                          |
+| Fasilitas         | STRING       | Fasilitas                                |    
+| Owner\_id         | BIGINT       | Foreign key ke tabel users               |
+| Main\_Review\_id  | BIGINT       | FOreign key ke tabel Review (one to one) |
+
 
 ### **Tabel Favorites**
 
@@ -111,5 +113,11 @@
 
   * Satu user bisa melaporkan banyak kost
   * Satu kost bisa dilaporkan oleh banyak user
+
+* **Kost – Review (Main Review)**
+  One to One
+
+  * Satu kost bisa memiliki satu review utama
+  * Satu review hanya bisa menjadi review utama untuk satu kost
 
 ---

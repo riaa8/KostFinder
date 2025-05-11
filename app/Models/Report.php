@@ -7,16 +7,30 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Report extends Model
 {
-    //
-    protected $fillable = ['user_id', 'kost_id', 'report_text', 'status'];
+    // Nama tabel eksplisit (jika diperlukan)
+    protected $table = 'reports';
 
+    // Field yang dapat diisi massal
+    protected $fillable = [
+        'user_id',
+        'kost_id',
+        'report_text',
+        'status',
+    ];
+
+    /**
+     * Relasi ke User (yang membuat laporan)
+     */
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * Relasi ke Kost (yang dilaporkan)
+     */
     public function kost(): BelongsTo
     {
-        return $this->belongsTo(Kost::class);
+        return $this->belongsTo(Kost::class, 'kost_id');
     }
 }

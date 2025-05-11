@@ -9,13 +9,17 @@ use App\Http\Controllers\{
     ReportController
 };
 
-Route::get('/', function () {
-    return view('welcome');
+// Routing untuk UserController
+Route::apiResource('user', UserController::class);
 
+// Routing untuk KostController
+Route::apiResource('kosts', KostController::class);
 
-    Route::apiResource('user', UserController::class);
-    Route::apiResource('kosts', KostController::class);
-    Route::apiResource('favorites', FavoriteController::class)->only(['index', 'store']);
-    Route::post('reviews', [ReviewController::class, 'store']);
-    Route::post('reports', [ReportController::class, 'store']);
-});
+// Routing untuk FavoriteController (hanya index dan store)
+Route::apiResource('favorites', FavoriteController::class)->only(['index', 'store']);
+
+// Routing untuk ReviewController (untuk membuat review)
+Route::post('reviews', [ReviewController::class, 'store']);
+
+// Routing untuk ReportController (untuk membuat report)
+Route::post('reports', [ReportController::class, 'store']);

@@ -11,63 +11,60 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('migration1', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-
-        //Tabel users (Admin, Pemilik Kost, Pencari Kost)
-        Schema::create('user', function (Blueprint $table) {
+        // Tabel users (Admin, Pemilik Kost, Pencari Kost)
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('no_phone');
             $table->enum('role', ['admin', 'pemilik', 'pencari']);
             $table->timestamps();
         });
 
-        //Tabel Kost
+        // Tabel kosts 
         Schema::create('kosts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id')->constrained('user')->onDelete('cascade');
+            $table->foreignId('owner_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
             $table->string('alamat');
             $table->integer('harga');
             $table->string('fasilitas');
             $table->enum('gender', ['putra', 'putri', 'campuran']);
             $table->enum('status', ['aktif', 'nonaktif', 'pending'])->default('pending');
+            $table->foreignId('main_review_id')->nullable()->unique()->constrained('reviews')->onDelete('set null');
             $table->timestamps();
         });
 
-        // Tabel Favorite
-        Schema::create('favorites', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
-            $table->foreignId('kost_id')->constrained('kosts')->onDelete('cascade');
-            $table->timestamps();
-        });
-
-        //Tabel review
+        // Tabel reviews 
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('kost_id')->constrained('kosts')->onDelete('cascade');
             $table->unsignedTinyInteger('rating'); // 1-5
             $table->string('comment');
             $table->timestamps();
         });
 
-        // Tabel report
-        Schema::create('reports', function (Blueprint $table) {
+        
+
+        // Tabel favorites
+        Schema::create('favorites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('user')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('kost_id')->constrained('kosts')->onDelete('cascade');
-            $table->stirng('report_text');
-            $table->enum('status', ['pending', 'diproses', 'selesai'])->default('pending');
             $table->timestamps();
         });
 
+        // Tabel reports
+        Schema::create('reports', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('kost_id')->constrained('kosts')->onDelete('cascade');
+            $table->string('report_text');
+            $table->enum('status', ['pending', 'diproses', 'selesai'])->default('pending');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -75,12 +72,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('migration1');
-        Schema::dropIfExists('user');
-        Schema::dropIfExists('kosts');
-        Schema::dropIfExists('favorites');
-        Schema::dropIfExists('reviews');
         Schema::dropIfExists('reports');
-
+        Schema::dropIfExists('favorites');
+        Schema::dropIfExists('kosts');
+        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('users');
     }
 };

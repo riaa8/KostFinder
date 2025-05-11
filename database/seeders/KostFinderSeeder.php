@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -14,9 +13,10 @@ class KostFinderSeeder extends Seeder
      */
     public function run(): void
     {
-        // users
-        DB::table('user')->insert([
+        // USERS
+        DB::table('users')->insert([
             [
+                'id' => 1,
                 'name' => 'Admin Satu',
                 'email' => 'admin@kostfinder.com',
                 'password' => Hash::make('admin123'),
@@ -25,6 +25,7 @@ class KostFinderSeeder extends Seeder
                 'created_at' => now(),
             ],
             [
+                'id' => 2,
                 'name' => 'Budi Pemilik',
                 'email' => 'budi@kostfinder.com',
                 'password' => Hash::make('budi123'),
@@ -33,6 +34,7 @@ class KostFinderSeeder extends Seeder
                 'created_at' => now(),
             ],
             [
+                'id' => 3,
                 'name' => 'Sari Pencari',
                 'email' => 'sari@kostfinder.com',
                 'password' => Hash::make('sari123'),
@@ -42,9 +44,10 @@ class KostFinderSeeder extends Seeder
             ]
         ]);
 
-        //kost
+        // KOSTS (tanpa main_review_id terlebih dahulu)
         DB::table('kosts')->insert([
             [
+                'id' => 1,
                 'owner_id' => 2,
                 'name' => 'Kost Mawar',
                 'alamat' => 'Jalan Andalas No. 10, Majene',
@@ -55,6 +58,7 @@ class KostFinderSeeder extends Seeder
                 'created_at' => now(),
             ],
             [
+                'id' => 2,
                 'owner_id' => 2,
                 'name' => 'Kost Melati',
                 'alamat' => 'Jalan H. Agus Salim No. 22, Majene',
@@ -66,15 +70,10 @@ class KostFinderSeeder extends Seeder
             ]
         ]);
 
-        // favorite
-        DB::table('favorites')->insert([
-            ['user_id' => 3, 'kost_id' => 1, 'created_at' => now()],
-            ['user_id' => 3, 'kost_id' => 2, 'created_at' => now()],
-        ]);
-
-        // reviews
+        // REVIEWS
         DB::table('reviews')->insert([
             [
+                'id' => 1,
                 'user_id' => 3,
                 'kost_id' => 1,
                 'rating' => 5,
@@ -82,6 +81,7 @@ class KostFinderSeeder extends Seeder
                 'created_at' => now()
             ],
             [
+                'id' => 2,
                 'user_id' => 3,
                 'kost_id' => 2,
                 'rating' => 4,
@@ -90,7 +90,13 @@ class KostFinderSeeder extends Seeder
             ]
         ]);
 
-        //report 
+        // FAVORITES
+        DB::table('favorites')->insert([
+            ['user_id' => 3, 'kost_id' => 1, 'created_at' => now()],
+            ['user_id' => 3, 'kost_id' => 2, 'created_at' => now()],
+        ]);
+
+        // REPORTS
         DB::table('reports')->insert([
             [
                 'user_id' => 3,
@@ -100,5 +106,9 @@ class KostFinderSeeder extends Seeder
                 'created_at' => now()
             ]
         ]);
+
+        // UPDATE main_review_id DI TABEL KOSTS
+        DB::table('kosts')->where('id', 1)->update(['main_review_id' => 1]);
+        DB::table('kosts')->where('id', 2)->update(['main_review_id' => 2]);
     }
 }
