@@ -93,12 +93,7 @@
 
 ### **Relasi**
 
-* **Kost – Review (Main Review)**
-  One to One
 
-  * Satu kost bisa memiliki satu review utama
-  * Satu review hanya bisa menjadi review utama untuk satu kost
-  
 * **Users – Kost**
   One to Many (1 pemilik bisa punya banyak kost)
 
@@ -119,6 +114,12 @@
 
   * Satu user bisa melaporkan banyak kost
   * Satu kost bisa dilaporkan oleh banyak user
+
+* **Kost – Review (Main Review)**
+  One to One
+
+  * Satu kost bisa memiliki satu review utama
+  * Satu review hanya bisa menjadi review utama untuk satu kost
 
 
 
