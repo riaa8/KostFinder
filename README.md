@@ -55,7 +55,9 @@
 | Name              | STRING       | Nama kost                                |
 | Alamat            | STRING       | Alamat kost                              |
 | Harga             | INTEGER      | Harga per bulan                          |
-| Fasilitas         | STRING       | Fasilitas                                |    
+| Fasilitas         | STRING       | Fasilitas                                | 
+| Gender            | ENUM         | Jenis kost berdasarkan gender penghuni   |
+| Status            | ENUM         | Status kost (aktif, nonaktif, pending)   |
 | Owner\_id         | BIGINT       | Foreign key ke tabel users               |
 | Main\_Review\_id  | BIGINT       | FOreign key ke tabel Review (one to one) |
 
@@ -80,12 +82,13 @@
 
 ### **Tabel Report**
 
-| Nama Field   | Tipe Data     | Keterangan                 |
-| ------------ | ------------- | -------------------------- |
-| Id           | BIGINT        | Primary key                |
-| User\_id     | BIGINT        | Foreign key ke tabel users |
-| Kost\_id     | BIGINT        | Foreign key ke tabel kost  |
-| Report\_text | STRING        | Alasan laporan             |
+| Nama Field   | Tipe Data     | Keterangan                                |
+| ------------ | ------------- | ----------------------------------------- |
+| Id           | BIGINT        | Primary key                               |
+| User\_id     | BIGINT        | Foreign key ke tabel users                |
+| Kost\_id     | BIGINT        | Foreign key ke tabel kost                 |
+| Report\_text | STRING        | Alasan laporan                            |
+| Status       | ENUM          | Status laporan (pending, proses, selesai) |
 
 ---
 
