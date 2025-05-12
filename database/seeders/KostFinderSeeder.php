@@ -8,107 +8,120 @@ use Illuminate\Support\Facades\Hash;
 
 class KostFinderSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // USERS
-        DB::table('users')->insert([
+        // Pengguna
+        DB::table('pengguna')->insert([
             [
-                'id' => 1,
-                'name' => 'Admin Satu',
+                'nama' => 'Admin Satu',
                 'email' => 'admin@kostfinder.com',
-                'password' => Hash::make('admin123'),
-                'no_phone' => '0811111111',
+                'kata_sandi' => Hash::make('admin123'),
                 'role' => 'admin',
-                'created_at' => now(),
+                'no_phone' => null,
+                'created_at' => now()
             ],
             [
-                'id' => 2,
-                'name' => 'Budi Pemilik',
-                'email' => 'budi@kostfinder.com',
-                'password' => Hash::make('budi123'),
-                'no_phone' => '0822222222',
+                'nama' => 'Pemilik Kost',
+                'email' => 'pemilik@kostfinder.com',
+                'kata_sandi' => Hash::make('pemilik123'),
                 'role' => 'pemilik',
-                'created_at' => now(),
+                'no_phone' => '081234567890',
+                'created_at' => now()
             ],
             [
-                'id' => 3,
-                'name' => 'Sari Pencari',
-                'email' => 'sari@kostfinder.com',
-                'password' => Hash::make('sari123'),
-                'no_phone' => '0833333333',
+                'nama' => 'Pencari Kost',
+                'email' => 'pencari@kostfinder.com',
+                'kata_sandi' => Hash::make('pencari123'),
                 'role' => 'pencari',
-                'created_at' => now(),
+                'no_phone' => '082233445566',
+                'created_at' => now()
             ]
         ]);
 
-        // KOSTS (tanpa main_review_id terlebih dahulu)
+        // Ambil ID pengguna
+        $pemilikId = DB::table('pengguna')->where('email', 'pemilik@kostfinder.com')->value('id');
+        $pencariId = DB::table('pengguna')->where('email', 'pencari@kostfinder.com')->value('id');
+
+        // Kosts
         DB::table('kosts')->insert([
             [
-                'id' => 1,
-                'owner_id' => 2,
-                'name' => 'Kost Mawar',
-                'alamat' => 'Jalan Andalas No. 10, Majene',
-                'harga' => 750000,
-                'fasilitas' => 'Wifi, Kamar Mandi Dalam, AC',
+                'nama' => 'Kost Putri Mawar',
+                'deskripsi' => 'Kost nyaman dan bersih khusus putri',
+                'harga_per_bulan' => 800000,
+                'url_gambar' => 'mawar.jpg',
                 'gender' => 'putri',
-                'status' => 'aktif',
-                'created_at' => now(),
+                'id_pemilik' => $pemilikId,
+                'created_at' => now()
             ],
             [
-                'id' => 2,
-                'owner_id' => 2,
-                'name' => 'Kost Melati',
-                'alamat' => 'Jalan H. Agus Salim No. 22, Majene',
-                'harga' => 600000,
-                'fasilitas' => 'Kipas Angin, Meja Belajar',
+                'nama' => 'Kost Putra Melati',
+                'deskripsi' => 'Kost strategis dekat kampus',
+                'harga_per_bulan' => 750000,
+                'url_gambar' => 'melati.jpg',
                 'gender' => 'putra',
-                'status' => 'aktif',
-                'created_at' => now(),
+                'id_pemilik' => $pemilikId,
+                'created_at' => now()
             ]
         ]);
 
-        // REVIEWS
-        DB::table('reviews')->insert([
+        $kost1 = DB::table('kosts')->where('nama', 'Kost Putri Mawar')->value('id');
+        $kost2 = DB::table('kosts')->where('nama', 'Kost Putra Melati')->value('id');
+
+        // Fasilitas
+        DB::table('fasilitas')->insert([
+            ['nama_fasilitas' => 'WiFi', 'created_at' => now()],
+            ['nama_fasilitas' => 'AC', 'created_at' => now()],
+            ['nama_fasilitas' => 'Kamar Mandi Dalam', 'created_at' => now()],
+        ]);
+
+        $wifi = DB::table('fasilitas')->where('nama_fasilitas', 'WiFi')->value('id');
+        $ac = DB::table('fasilitas')->where('nama_fasilitas', 'AC')->value('id');
+        $km = DB::table('fasilitas')->where('nama_fasilitas', 'Kamar Mandi Dalam')->value('id');
+
+        // Kost-Fasilitas
+        DB::table('kost_fasilitas')->insert([
+            ['id_kost' => $kost1, 'id_fasilitas' => $wifi, 'created_at' => now()],
+            ['id_kost' => $kost1, 'id_fasilitas' => $ac, 'created_at' => now()],
+            ['id_kost' => $kost2, 'id_fasilitas' => $wifi, 'created_at' => now()],
+            ['id_kost' => $kost2, 'id_fasilitas' => $km, 'created_at' => now()],
+        ]);
+
+        // Alamat
+        DB::table('alamat')->insert([
             [
-                'id' => 1,
-                'user_id' => 3,
-                'kost_id' => 1,
-                'rating' => 5,
-                'comment' => 'Kostnya bersih dan pemiliknya ramah!',
+                'id_kost' => $kost1,
+                'jalan' => 'Jl. Mawar No.12',
+                'kota' => 'Majene',
+                'provinsi' => 'Sulawesi Barat',
+                'kode_pos' => '91412',
                 'created_at' => now()
             ],
             [
-                'id' => 2,
-                'user_id' => 3,
-                'kost_id' => 2,
-                'rating' => 4,
-                'comment' => 'Nyaman tapi agak jauh dari kampus.',
+                'id_kost' => $kost2,
+                'jalan' => 'Jl. Melati No.5',
+                'kota' => 'Majene',
+                'provinsi' => 'Sulawesi Barat',
+                'kode_pos' => '91412',
                 'created_at' => now()
             ]
         ]);
 
-        // FAVORITES
-        DB::table('favorites')->insert([
-            ['user_id' => 3, 'kost_id' => 1, 'created_at' => now()],
-            ['user_id' => 3, 'kost_id' => 2, 'created_at' => now()],
-        ]);
-
-        // REPORTS
-        DB::table('reports')->insert([
+        // Review
+        DB::table('review')->insert([
             [
-                'user_id' => 3,
-                'kost_id' => 2,
-                'report_text' => 'Foto kamar tidak sesuai dengan kenyataan.',
-                'status' => 'pending',
+                'id_kost' => $kost1,
+                'id_pengguna' => $pencariId,
+                'rating' => 5,
+                'komentar' => 'Kost sangat bersih dan nyaman!',
+                'created_at' => now()
+            ],
+            [
+                'id_kost' => $kost2,
+                'id_pengguna' => $pencariId,
+                'rating' => 4,
+                'komentar' => 'Dekat kampus dan ada WiFi!',
                 'created_at' => now()
             ]
         ]);
-
-        // UPDATE main_review_id DI TABEL KOSTS
-        DB::table('kosts')->where('id', 1)->update(['main_review_id' => 1]);
-        DB::table('kosts')->where('id', 2)->update(['main_review_id' => 2]);
     }
 }

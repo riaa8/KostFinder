@@ -6,93 +6,84 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-  public function up()
+    public function up(): void
     {
-        // Create users table
-        Schema::create('users', function (Blueprint $table) {
-            $table->bigIncrements('id'); 
-            $table->string('name'); 
-            $table->string('email')->unique(); 
-            $table->string('password'); 
-            $table->string('no_phone'); 
-            $table->enum('role', ['admin', 'pemilik', 'pencari']); 
-            $table->timestamps(); 
+        // Tabel Pengguna
+        Schema::create('pengguna', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('email')->unique();
+            $table->string('kata_sandi');
+            $table->enum('role', ['admin', 'pemilik', 'pencari']);
+            $table->string('no_phone')->nullable();
+            $table->timestamp('created_at')->useCurrent();
         });
 
-        // Create reviews table (dibuat sebelum kosts karena kosts memiliki foreign key ke reviews)
-        Schema::create('reviews', function (Blueprint $table) {
-            $table->bigIncrements('id'); 
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('kost_id'); 
-            $table->integer('rating');
-            $table->text('comment')->nullable(); 
-            $table->timestamps();
-        });
-
-        // Create kosts table
+        // Tabel Kosts
         Schema::create('kosts', function (Blueprint $table) {
-            $table->bigIncrements('id'); 
-            $table->string('name'); 
-            $table->string('alamat'); 
-            $table->integer('harga'); 
-            $table->text('fasilitas');
-            $table->enum('gender', ['putra', 'putri', 'campuran']);
-            $table->enum('status', ['aktif', 'nonaktif', 'pending'])->default('pending');
-            $table->unsignedBigInteger('owner_id'); 
-            $table->unsignedBigInteger('main_review_id')->nullable(); // BIGINT, Foreign Key ke reviews (one-to-one, nullable)
-            $table->timestamps();
+            $table->id();
+            $table->string('nama');
+            $table->text('deskripsi');
+            $table->decimal('harga_per_bulan', 10, 2);
+            $table->string('url_gambar')->nullable();
+            $table->enum('gender', ['putra', 'putri', 'campur']);
+            $table->unsignedBigInteger('id_pemilik');
+            $table->timestamp('created_at')->useCurrent();
+
+            $table->foreign('id_pemilik')->references('id')->on('pengguna')->onDelete('cascade');
         });
 
-        // Create favorites table
-        Schema::create('favorites', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id'); 
-            $table->unsignedBigInteger('kost_id'); 
-            $table->timestamps();
+        // Tabel Fasilitas
+        Schema::create('fasilitas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_fasilitas');
+            $table->timestamp('created_at')->useCurrent();
         });
 
-        // Create reports table
-        Schema::create('reports', function (Blueprint $table) {
-            $table->bigIncrements('id'); 
-            $table->unsignedBigInteger('user_id'); 
-            $table->unsignedBigInteger('kost_id'); 
-            $table->text('report_text'); 
-            $table->enum('status', ['pending', 'diproses', 'selesai'])->default('pending');
-            $table->timestamps();
+        // Tabel Pivot Kost-Fasilitas
+        Schema::create('kost_fasilitas', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('id_kost');
+            $table->unsignedBigInteger('id_fasilitas');
+            $table->timestamp('created_at')->useCurrent();
+
+            $table->foreign('id_kost')->references('id')->on('kosts')->onDelete('cascade');
+            $table->foreign('id_fasilitas')->references('id')->on('fasilitas')->onDelete('cascade');
         });
 
-        // Add foreign key constraints after all tables are created
-        Schema::table('kosts', function (Blueprint $table) {
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('main_review_id')->references('id')->on('reviews')->onDelete('set null');
+        // Tabel Alamat
+        Schema::create('alamat', function (Blueprint $table) {
+            $table->unsignedBigInteger('id_kost')->primary();
+            $table->string('jalan');
+            $table->string('kota');
+            $table->string('provinsi');
+            $table->string('kode_pos');
+            $table->timestamp('created_at')->useCurrent();
+
+            $table->foreign('id_kost')->references('id')->on('kosts')->onDelete('cascade');
         });
 
-        Schema::table('reviews', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('kost_id')->references('id')->on('kosts')->onDelete('cascade');
-        });
+        // Tabel Review
+        Schema::create('review', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('id_kost');
+            $table->unsignedBigInteger('id_pengguna');
+            $table->tinyInteger('rating');
+            $table->text('komentar')->nullable();
+            $table->timestamp('created_at')->useCurrent();
 
-        Schema::table('favorites', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('kost_id')->references('id')->on('kosts')->onDelete('cascade');
-        });
-
-        Schema::table('reports', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('kost_id')->references('id')->on('kosts')->onDelete('cascade');
+            $table->foreign('id_kost')->references('id')->on('kosts')->onDelete('cascade');
+            $table->foreign('id_pengguna')->references('id')->on('pengguna')->onDelete('cascade');
         });
     }
 
-    public function down()
+    public function down(): void
     {
-        // Drop tables in reverse order to avoid foreign key constraint issues
-        Schema::dropIfExists('reports');
-        Schema::dropIfExists('favorites');
+        Schema::dropIfExists('review');
+        Schema::dropIfExists('alamat');
+        Schema::dropIfExists('kost_fasilitas');
+        Schema::dropIfExists('fasilitas');
         Schema::dropIfExists('kosts');
-        Schema::dropIfExists('reviews');
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('pengguna');
     }
 };

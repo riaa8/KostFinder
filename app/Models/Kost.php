@@ -2,55 +2,45 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Kost extends Model
 {
-    // Nama tabel eksplisit (jika diperlukan)
+    use HasFactory;
+
     protected $table = 'kosts';
-
-    // Field yang bisa diisi massal
-    protected $fillable = [
-        'owner_id',
-        'name',
-        'alamat',
-        'harga',
-        'fasilitas',
-        'gender',
-        'status',
-    ];
+    protected $fillable = ['nama', 'deskripsi', 'harga_per_bulan', 'url_gambar', 'gender', 'id_pemilik', 'created_at'];
 
     /**
-     * Relasi ke User sebagai pemilik kost
+     * Mendapatkan pemilik kost.
      */
-    public function owner(): BelongsTo
+    public function pemilik()
     {
-        return $this->belongsTo(User::class, 'owner_id');
+        return $this->belongsTo(Pengguna::class, 'id_pemilik');
     }
 
     /**
-     * Relasi ke tabel favorites
+     * Mendapatkan fasilitas yang dimiliki oleh kost.
      */
-    public function favorites(): HasMany
+    public function fasilitas()
     {
-        return $this->hasMany(Favorite::class, 'kost_id');
+        return $this->belongsToMany(Fasilitas::class, 'kost_fasilitas', 'id_kost', 'id_fasilitas');
     }
 
     /**
-     * Relasi ke tabel reviews
+     * Mendapatkan alamat dari kost.
      */
-    public function reviews(): HasMany
+    public function alamat()
     {
-        return $this->hasMany(Review::class, 'kost_id');
+        return $this->hasOne(Alamat::class, 'id_kost');
     }
 
     /**
-     * Relasi ke tabel reports
+     * Mendapatkan review dari kost.
      */
-    public function reports(): HasMany
+    public function reviews()
     {
-        return $this->hasMany(Report::class, 'kost_id');
+        return $this->hasMany(Review::class, 'id_kost');
     }
 }

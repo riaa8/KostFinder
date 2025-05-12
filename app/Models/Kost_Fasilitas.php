@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class Kost_Fasilitas extends Model
 {
     use HasFactory;
 
-    protected $table = 'review';
-    protected $fillable = ['id_kost', 'id_pengguna', 'rating', 'komentar', 'created_at'];
+    protected $table = 'kost_fasilitas';
+    protected $fillable = ['id_kost', 'id_fasilitas', 'created_at'];
 
     /**
      * Mendapatkan kost terkait.
@@ -21,10 +21,10 @@ class Review extends Model
     }
 
     /**
-     * Mendapatkan pengguna terkait yang memberikan review.
+     * Mendapatkan fasilitas terkait.
      */
-    public function pengguna()
+    public function fasilitas()
     {
-        return $this->belongsTo(Pengguna::class, 'id_pengguna');
+        return $this->belongsTo(Fasilitas::class, 'id_fasilitas');
     }
 }
