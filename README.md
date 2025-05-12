@@ -11,84 +11,125 @@
 <p align="center">2025</p>
 
 
-## **Role dan Fitur-fitur**
+## 📌 Deskripsi Singkat
 
-### **Admin**
+**KostFinder** adalah sistem informasi berbasis web yang membantu pencari kost menemukan tempat tinggal ideal berdasarkan harga, fasilitas, dan alamat. Aplikasi ini memfasilitasi pencari kost untuk menelusuri pilihan kost yang tersedia, dan pemilik kost untuk mempromosikan properti mereka. Admin bertugas memastikan seluruh data tetap valid dan terpercaya.
 
-* Menejemen User
-* Melihat Laporan
-* Menindak lanjuti review atau report
+---
+## 👥 Role & Fitur-fitur
 
-### **Pemilik Kost**
+### 1. Admin
+**Fitur :**
 
-* Menambahkan kost baru
-* Mengelola data kost (Update/hapus)
-* Melihat review pengguna
+* Melihat semua data pengguna, kost, review
+* Menghapus atau memperbarui data kost
+* Mengelola akun pengguna
+* Memoderasi komentar atau riview
 
-### **Pencari Kost**
+### 2. Pemilik Kost
+**Fitur :**
 
-* Mencari kost berdasarkan filter
-* Memberi review dan rating
-* Menambahkan kost ke dalam favorit
-* Melaporkan kost (jika perlu)
+* Registrasi dan login
+* Mengelola data kost (Menambah, mengedit dan menghapus)
+* Mengelola data fasilitas dan alamat kost
+* Melihat review dari pengguna terhadap kost mereka
+
+### 3. Pencari Kost
+**Fitur :**
+
+* Registrasi dan login
+* Menelusuri dan memfilter kost
+* Melihat detail kost, fasilitas, dan alamat
+* Memberikan review dan rating
+* Menghubungi pemilik via nomor telepon
+
+#### 🔒 Ringkasan Hak Akses
+
+| Fitur                                      | Admi    | Pemilik Kost   | Pencari Kost      |
+|--------------------------------------------|---------|----------------|-------------------|
+| Login & Register                           | ✅      | ✅            | ✅                |
+| Lihat daftar kost                          | ✅      | ✅            | ✅                |
+| Tambah / Edit / Hapus kost                 | ❌      | ✅            | ❌                |
+| Lihat & Kelola review                      | ✅      | ✅ (lihat)    | ✅ (beri ulasan)  |
+| Kelola data pengguna                       | ✅      | ❌            | ❌                |
+| Tambah fasilitas & alamat kost             | ❌      | ✅            | ❌                |
+| Hubungi pemilik melalui nomor telepon      | ❌      | ❌            | ✅                |
+
 
 ---
 
 ## **Tabel-Tabel Database**
 
-### **Tabel User**
+### **Tabel Pengguna**
 
-| Nama Field | Tipe Data    | Keterangan                    |
-| ---------- | ------------ | ----------------------------- |
-| Id         | BIGINT       | Primary key (Auto Increment)  |
-| Name       | STRING       | Nama pengguna                 |
-| Email      | STRING       | Email pengguna (unique)       |
-| Password   | STRING       | Password terenkripsi          |
-| No\_phone  | STRING       | Nomor HP pengguna             |
-| Role       | ENUM         | 'admin', 'pemilik', 'pencari' |
+| Nama Field    | Tipe Data    | Keterangan                    |
+| ------------- | ------------ | ----------------------------- |
+| Id            | INT(PK)      | Primary key (Auto Increment)  |
+| Nama          | VARCHAR      | Nama pengguna                 |
+| Email         | VARCHAR      | Email pengguna (unique)       |
+| Kata\_sandi   | VARCHAR      | Password terenkripsi          |
+| Role          | ENUM         | 'admin', 'pemilik', 'pencari' |
+| No\_phone     | VARCHAR      | Nomor HP pengguna             |
+| Created_at    | TIMESTAMP    | Tanggal registrasi pengguna   |
+
 
 ### **Tabel Kosts**
 
 | Nama Field        | Tipe Data    | Keterangan                               |
 | ----------------- | ------------ | ---------------------------------------- |
-| Id                | BIGINT       | Primary key                              |
-| Name              | STRING       | Nama kost                                |
-| Alamat            | STRING       | Alamat kost                              |
-| Harga             | INTEGER      | Harga per bulan                          |
-| Fasilitas         | STRING       | Fasilitas                                | 
+| Id                | INT(PK)      | Primary key                              |
+| Nama              | VARCHAR      | Nama kost                                |
+| Deskripsi         | VARCHAR      | Deskripsi kost (fasilitas, aturan)       |
+| Harga_per_bulan   | DECIMAL      | Harga sewa per bulan                     |
+| Url_gambar        | VARCHAR      | URL gambar kost                          | 
 | Gender            | ENUM         | Jenis kost berdasarkan gender penghuni   |
-| Status            | ENUM         | Status kost (aktif, nonaktif, pending)   |
-| Owner\_id         | BIGINT       | Foreign key ke tabel users               |
-| Main\_Review\_id  | BIGINT       | FOreign key ke tabel Review (one to one) |
+| id_pemilik        | INT(FK)      | Foreign key ke tabel pengguna            |
+| created_at        | TIMRSTAMP    | Tanggal kost ditambahkan                 |
 
 
-### **Tabel Favorites**
 
-| Nama Field | Tipe Data | Keterangan                 |
-| ---------- | --------- | -------------------------- |
-| Id         | BIGINT    | Primary key                |
-| User\_id   | BIGINT    | Foreign key ke tabel users |
-| Kost\_id   | BIGINT    | Foreign key ke tabel kosts |
+### **Tabel Fasilitas**
 
-### **Tabel Reviews**
+| Nama Field       | Tipe Data | Keterangan                               |
+| ---------------- | --------- | ---------------------------------------- |
+| Id               | INT(PK)   | Primary key                              |
+| Nama_fasilitas   | VARCHAR   | Nama fasilitas (misalnya: wifi, AC, dll) |
+| Created_at       | BIGINT    | Tanggal fasilitas ditambahkan            |
 
-| Nama Field | Tipe Data    | Keterangan                 |
-| ---------- | ------------ | -------------------------- |
-| Id         | BIGINT       | Primary key                |
-| User\_id   | BIGINT       | Foreign key ke tabel users |
-| Kost\_id   | BIGINT       | Foreign key ke tabel kost  |
-| Rating     | INTEGER      | Nilai rating               |
-| Comment    | STRING       | Isi komentar               |
 
-### **Tabel Report**
+### **Tabel Kost_Fasilitas**
 
 | Nama Field   | Tipe Data     | Keterangan                                |
 | ------------ | ------------- | ----------------------------------------- |
-| Id           | BIGINT        | Primary key                               |
-| User\_id     | BIGINT        | Foreign key ke tabel users                |
-| Kost\_id     | BIGINT        | Foreign key ke tabel kost                 |
-| Report\_text | STRING        | Alasan laporan                            |
-| Status       | ENUM          | Status laporan (pending, proses, selesai) |
+| Id           | INT (PK)      | Primary key                               |
+| Id_kost      | INT (FK)      | Foreign key ke tabel kost                 |
+| ID_fasilitas | INT (FK)      | Foreign key ke tabel fasilitas            |
+| Created_at   | TIMESTAMP     | Tanggal hubungan ditambahkan              |
+
+### **Tabel Alamat**
+
+| Nama Field   | Tipe Data     | Keterangan                                |
+| ------------ | ------------- | ----------------------------------------- |
+| Id_kost      | INT (PK, FK)  | ID kost (kost.id, kunci utama)            |
+| Jalan        | VARCHAR       | Nama Jalan                                |
+| Kota         | VARCHAR       | Nama kota                                 |
+| Provinsi     | VARCHAR       | Nama provinsi                             |
+| Kode_pos     | VARCHAR       | Kode pos                                  |
+| Created_at   | TIMESTAMP     | Tanggal hubungan ditambahkan              |
+
+
+### **Tabel Review**
+
+| Nama Field  | Tipe Data    | Keterangan                    |
+| ----------- | ------------ | ----------------------------- |
+| Id          | INT          | Primary key                   |
+| Id_kost     | INT          | Foreign key ke tabel kost     |
+| Id_pengguna | INT          | Foreign key ke tabel pengguna |
+| Rating      | INT          | Nilai rating (1-5)            |
+| Komentar    | STRING       | Komentar ulasan (opsional)    |
+| created_at  | TIMESTAMP    | Tanggal ulasan ditambahkan    |
+
+
 
 ---
 
@@ -97,33 +138,33 @@
 ### **Relasi**
 
 
-* **Users – Kost**
-  One to Many (1 pemilik bisa punya banyak kost)
+1. **Pengguna – Kost**
+   - One-to-Many: satu pemilik bisa punya banyak kost.
+   - `pengguna.id → kost.id_pemilik`
 
-* **Users – Favorites – Kosts**
-  Many to Many 
+2. **Kost – Fasilitas**  (melalui `kost_fasilitas`)
+   - Many-to-Many: satu kost bisa punya banyak fasilitas, dan sebaliknya.
+   - `kost.id → kost_fasilitas.id_kost`
+   - `fasilitas.id → kost_fasilitas.id_fasilitas`
 
-  * Satu user bisa menambahkan banyak kost ke favoritnya
-  * Satu kost bisa difavoritkan oleh banyak user
+3. **kost ↔ alamat**
+   - One-to-One: satu kost hanya memiliki satu alamat.
+   - `kost.id → alamat.id_kost`
 
-* **Users – Reviews – Kosts**
-  Many to Many 
+4. **kost ↔ review**
+   - One-to-Many: satu kost bisa memiliki banyak review.
+   - `kost.id → review.id_kost`
 
-  * Satu user bisa memberikan review ke banyak kost
-  * Satu kost bisa memiliki review dari banyak user
+5. **pengguna ↔ review**
+   - One-to-Many: satu pengguna dapat memberikan banyak review.
+   - `pengguna.id → review.id_pengguna`
 
-* **Users – Reports – Kosts**
-  Many to Many 
+---
 
-  * Satu user bisa melaporkan banyak kost
-  * Satu kost bisa dilaporkan oleh banyak user
+## 📎 Catatan Tambahan
 
-* **Kost – Review (Main Review)**
-  One to One
-
-  * Satu kost bisa memiliki satu review utama
-  * Satu review hanya bisa menjadi review utama untuk satu kost
-
-
+- Kata sandi pengguna dienkripsi menggunakan hashing (misal bcrypt).
+- Sistem tidak mencakup fitur pembayaran atau booking online.
+- Validasi data dilakukan di sisi server untuk menjaga keamanan dan integritas data.
 
 ---
