@@ -22,9 +22,11 @@ Route::prefix('kost')->group(function () {
     Route::get('/', [KostController::class, 'index']); // Menampilkan semua kost
     Route::get('/{id}', [KostController::class, 'show']); // Menampilkan detail kost
     Route::post('/', [KostController::class, 'store']); // Menambahkan kost
-    Route::put('/{id}', [KostController::class, 'update']); // Mengupdate kost
+    Route::put('/{id}', [KostController::class, 'update'])->name('kost.update'); // Mengupdate kost
+    Route::get('/{id}/edit', [KostController::class, 'edit'])->name('kost.edit'); // Form untuk edit kost
     Route::delete('/{id}', [KostController::class, 'destroy']); // Menghapus kost
 });
+
 
 // Route untuk Alamat
 Route::prefix('kost/{kostId}/alamat')->group(function () {
@@ -58,3 +60,4 @@ Route::prefix('kost/{kostId}/review')->group(function () {
     Route::put('/{id}', [ReviewController::class, 'update']); // Mengupdate review
     Route::delete('/{id}', [ReviewController::class, 'destroy']); // Menghapus review
 });
+
