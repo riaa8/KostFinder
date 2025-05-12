@@ -45,7 +45,7 @@
 
 #### 🔒 Ringkasan Hak Akses
 
-| Fitur                                      | Admi    | Pemilik Kost   | Pencari Kost      |
+| Fitur                                      | Admin   | Pemilik Kost   | Pencari Kost      |
 |--------------------------------------------|---------|----------------|-------------------|
 | Login & Register                           | ✅      | ✅            | ✅                |
 | Lihat daftar kost                          | ✅      | ✅            | ✅                |
